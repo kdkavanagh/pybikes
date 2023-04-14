@@ -41,6 +41,7 @@ class Gbfs(BikeShareSystem):
         self.feed_url = feed_url
         self.force_https = force_https
         self.ignore_errors = ignore_errors
+        self.free_bikes = []
 
         # Allow hardcoding feed urls on initialization
         self.feeds = {}
@@ -128,6 +129,9 @@ class Gbfs(BikeShareSystem):
         else:
             vehicles = {}
 
+        if 'free_bike_status' in feeds:
+            self.free_bikes = json.loads(scraper.request(feeds['free_bike_status']))
+
         # Aggregate status and information by uid
         # Note there's no guarantee that station_status has the same
         # station_ids as station_information.
@@ -199,6 +203,10 @@ class GbfsStation(BikeShareStation):
                 self.extra['has_ebikes'] = True
                 self.extra['ebikes'] = int(bike_types['ebike'])
                 self.extra['normal_bikes'] = int(bike_types['mechanical'])
+
+        if 'num_scooters_available' in info:
+                self.extra['has_scooters'] = True
+                self.extra['scooters'] = int(info['num_scooters_available'])
 
         if 'rental_methods' in info:
             payment = list(map(unicode.lower, info['rental_methods']))
