@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(
     name="pybikes",
-    version="1.0.1",
+    version="1.0.2",
     author="Lluis Esquerda",
     author_email="eskerda@gmail.com",
     packages=["pybikes"],

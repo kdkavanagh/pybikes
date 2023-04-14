@@ -130,7 +130,7 @@ class Gbfs(BikeShareSystem):
             vehicles = {}
 
         if 'free_bike_status' in feeds:
-            self.free_bikes = json.loads(scraper.request(feeds['free_bike_status']))
+            self.free_bikes = json.loads(scraper.request(feeds['free_bike_status']))['data']['bikes']
 
         # Aggregate status and information by uid
         # Note there's no guarantee that station_status has the same
